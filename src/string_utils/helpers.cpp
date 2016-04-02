@@ -1,0 +1,33 @@
+/*
+ESP8266-based Dallas 1-wire temperature sensors to mqtt broker interface
+Copyright (C) 2016  Fran Viktor Pavelić <fv.pavelic@egzodus.com>
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
+#include "Arduino.h"
+#include <DallasTemperature.h>
+String formatAddress(DeviceAddress addr) {
+  String address;
+  byte i;
+  address += "0x";
+  for (i = 0; i < 8; i++) { // prefix the printout with 0x
+    if (addr[i] < 16) {
+      address += "0"; // add a leading '0' if required.
+    }
+    address += String(addr[i], HEX); // print the actual value in HEX
+  }
+  return address;
+}
